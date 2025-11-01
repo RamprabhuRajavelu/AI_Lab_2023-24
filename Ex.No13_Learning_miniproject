@@ -1,57 +1,89 @@
 # Ex.No: 13 Learning – Use Supervised Learning  
-### DATE:                                                                            
-### REGISTER NUMBER : 212222040145
+### DATE: 01/11/2025                                                                     
+### REGISTER NUMBER : 212222040129
 ### AIM: 
-To write a program to train the classifier for -----------------.
+To write a program to train the classifier for Weather Condition Prediction using Decision Tree Classifier.
 ###  Algorithm:
+Step 1: Start the program.
+
+Step 2: Import the required libraries such as pandas, numpy, scikit-learn, and plotly.
+
+Step 3: Load the weather dataset using pd.read_csv().
+
+Step 4: Perform data preprocessing — handle missing values, encode categorical data, and normalize features.
+
+Step 5: Split the dataset into training and testing sets using train_test_split().
+
+Step 6: Train the model using the Decision Tree Classifier on the training data.
+
+Step 7: Test the model on the testing data and generate predictions.
+
+Step 8: Evaluate the model performance using metrics like accuracy, confusion matrix, and classification report.
 
 ### Program:
-```
-from google.colab import drive
-drive.mount('/content/gdrive')
-#import packages
+```py
+!pip install scikit-learn==1.4.2 imbalanced-learn==0.12.2
+!pip install catboost
+import pandas as pd
 import numpy as np
-import pandas as pd
-pip install gradio
-import gradio as gr
-import pandas as pd
-cd /content/gdrive/MyDrive/demo/gradio_project-main
-data = pd.read_csv('diabetes.csv')
-data.head()
-print(data.columns)
-x = data.drop(['Outcome'], axis=1)
-y = data['Outcome']
-print(x[:5])
-from sklearn.model_selection import train_test_split
-x_train, x_test, y_train, y_test= train_test_split(x,y)
+# Visualization
+import plotly.express as px
+import plotly.io as pio
+import plotly.graph_objects as go
+
+# Feature engineering
+from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import StandardScaler
-scaler = StandardScaler()
-x_train_scaled = scaler.fit_transform(x_train)
-x_test_scaled = scaler.fit_transform(x_test)
-from sklearn.neural_network import MLPClassifier
-model = MLPClassifier(max_iter=1000, alpha=1)
-model.fit(x_train, y_train)
-print("Model Accuracy on training set:", model.score(x_train, y_train))
-print("Model Accuracy on Test Set:", model.score(x_test, y_test))
-print(data.columns)
-def diabetes(Pregnancies, Glucose, Blood_Pressure, SkinThickness, Insulin, BMI,Diabetes_Pedigree, Age):
-    x = np.array([Pregnancies,Glucose,Blood_Pressure,SkinThickness,Insulin,BMI,Diabetes_Pedigree,Age])
-    prediction = model.predict(x.reshape(1, -1))
-    if(prediction==0):
-      return "NO"
-    else:
-      return "YES"
-outputs = gr.Textbox()
-app = gr.Interface(fn=diabetes, inputs=['number','number','number','number','number','number','number','number'], outputs=outputs,description="Detection of Diabeties")
-app.launch(share=True)
+
+
+# Models (liner models)
+from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import SGDClassifier
+from sklearn.svm import SVC
+from sklearn.naive_bayes import GaussianNB
+from sklearn.neighbors import KNeighborsClassifier
+
+
+# Models (tree-based models)
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
+from catboost import CatBoostClassifier
+
+# training
+from imblearn.combine import SMOTEENN
+from sklearn.model_selection import train_test_split
+
+
+# Testing
+from sklearn.metrics import classification_report
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import GridSearchCV
+
+
+data = pd.read_csv('/seattle-weather.csv')
+data
+
+data.info()
+
+data.describe()
+
+
+data.isna().sum()
+
+
+graph = px.line(data, x='date', y='precipitation', title='Seattle Weather Precipitation Over Time')
+graph.update_layout(
+    xaxis_title='Date',
+    yaxis_title='Precipitation (inches)',
+    title_x=0.5
+)
 ```
 ### Output:
-
-https://352a80ed64654063e9.gradio.live/
-
-![image](https://github.com/user-attachments/assets/2b652215-c532-4993-be9a-4546b4d57445)
-
-
+<img width="852" height="523" alt="Screenshot 2025-10-25 140421" src="https://github.com/user-attachments/assets/01a3c75d-0055-45ce-9aa5-25519e0c6f27" />
+<img width="791" height="717" alt="image" src="https://github.com/user-attachments/assets/528b223d-ef87-4367-90d7-cf6a02c9915c" />
+<img width="1441" height="608" alt="image" src="https://github.com/user-attachments/assets/4f1c8f1a-3b59-41a1-99e9-e0c6c097a140" />
 
 
 
